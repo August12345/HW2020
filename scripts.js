@@ -86,3 +86,41 @@ function renderTaskItems() {
     }
 }
 
+function renderTaskCtrlBar(tasks,taskIdx) {
+    let ctrlbarEl = document.createElement("div");
+    ctrlbarEl.className = "ctrlbar";
+
+    let upEl = document.createElement("button");
+    if(taskIdx===0){
+        upEl.disabled = true;
+    }
+    upEl.innerText = "⬆";
+    upEl.onclick = () => {
+        //
+    };
+    ctrlbarEl.append(upEl);
+
+    let downEl = document.createElement("button");
+    
+    downEl.innerText = "⬇";
+    downEl.onclick = () => {
+        //
+    };
+    ctrlbarEl.append(downEl);
+
+
+    let cancelEl = document.createElement("button");
+    cancelEl.innerText = "X";
+    cancelEl.onclick = () => {
+        tasks.splice(taskIdx, 1);
+        renderTaskItems();
+    };
+    ctrlbarEl.append(cancelEl);
+
+    return ctrlbarEl;
+
+}
+
+
+renderEditor();
+renderTaskItems();
