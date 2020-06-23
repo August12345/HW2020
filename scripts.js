@@ -59,6 +59,7 @@ function renderTaskItems() {
         let doneEl = document.createElement("input");
         doneEl.type = "checkbox";
         doneEl.checked = task.done;
+
         if (task.done) {
             itemEl.classList.add("done");
         } else {
@@ -94,20 +95,31 @@ function renderTaskCtrlBar(tasks,taskIdx) {
     if(taskIdx===0){
         upEl.disabled = true;
     }
-    upEl.innerText = "⬆";
     upEl.onclick = () => {
-        //
+        let t = tasks[taskIdx];
+        tasks[taskIdx] = tasks[taskIdx - 1];
+        tasks[taskIdx - 1] = t;
+        renderTaskItems();
     };
+
+    upEl.innerText = "⬆";
+    
     ctrlbarEl.append(upEl);
 
     let downEl = document.createElement("button");
     
     downEl.innerText = "⬇";
-    downEl.onclick = () => {
-        //
-    };
     ctrlbarEl.append(downEl);
-
+    downEl.onclick = () => {
+        let t = tasks[taskIdx];
+        tasks[taskIdx] = tasks[taskIdx + 1];
+        tasks[taskIdx + 1] = t;
+        renderTaskItems();
+    };
+    
+    if (taskIdx === tasks.length - 1) {
+        downEl.disabled = true;
+      }
 
     let cancelEl = document.createElement("button");
     cancelEl.innerText = "X";
@@ -123,4 +135,3 @@ function renderTaskCtrlBar(tasks,taskIdx) {
 
 
 renderEditor();
-renderTaskItems();
